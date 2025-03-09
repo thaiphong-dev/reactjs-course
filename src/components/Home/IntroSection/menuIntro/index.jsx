@@ -1,6 +1,6 @@
 import React from "react";
 import MenuIntroItem from "./MenuIntroItem";
-
+import "./index.css";
 const MenuIntro = () => {
   const listMenu = [
     {
@@ -26,15 +26,23 @@ const MenuIntro = () => {
     },
   ];
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-      }}
-    >
-      {listMenu.map((menu) => (
-        <MenuIntroItem {...menu} />
-      ))}
+    <div>
+      <div
+        // style={{
+        //   display: "grid",
+        //   gridTemplateColumns: "3",
+        // }}
+        className="text-[20px] text-red-500 font-bold grid grid-cols-2 text-center  md:grid-cols-3 lg:grid-cols-4"
+      >
+        <div className="border border-black">1</div>
+        <div className="border border-black">2</div>
+        <div className="border border-black">3</div>
+        <div className="border border-black">4</div>
+        <div className="border border-black">1</div>
+        <div className="border border-black">2</div>
+        <div className="border border-black">3</div>
+        <div className="border border-black">4</div>
+      </div>
     </div>
   );
 };

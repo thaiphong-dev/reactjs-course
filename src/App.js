@@ -2,6 +2,7 @@ import "./App.css";
 import Home from "./components/Home"; // Ensure Home component is correctly defined and exported in './components/Home'
 import { BrowserRouter, Routes, Route } from "react-router";
 import Menu from "./components/Menu";
+import MainMenu from "./components/Common/Menu";
 // JSX
 function App() {
   // Component
@@ -45,29 +46,9 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <div className="flex flex-col min-h-screen">
-          {/* <nav className="bg-gray-800 p-4 text-white flex gap-4">
-            <Link to="/">Home</Link>
-            <Link to="/product">Product</Link>
-            <Link to="/cart">Cart</Link>
-            <Link to="/me">Me</Link>
-          </nav> */}
-          <main className="flex-1 p-4">
-            <Routes>
-              <Route
-                path="/"
-                element={<Home male={list} female={listFemale} />}
-              />
-              <Route
-                path="/menu"
-                element={<Menu />}
-              />
+        <div className="flex flex-col min-h-screen ">
+          <MainMenu />
 
-              {/* <Route path="/product" element={<Product />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/me" element={<Me />} /> */}
-            </Routes>
-          </main>
         </div>
       </BrowserRouter>
       {/* <Products /> */}
