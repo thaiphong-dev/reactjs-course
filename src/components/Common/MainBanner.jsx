@@ -11,4 +11,4 @@ const MainBanner = (props) => {
 MainBanner.propTypes = {
   img: String,
 };
-export default MainBanner;
+export default React.memo(MainBanner);

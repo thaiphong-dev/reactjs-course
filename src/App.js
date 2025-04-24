@@ -1,57 +1,30 @@
 import "./App.css";
-import Home from "./components/Home"; // Ensure Home component is correctly defined and exported in './components/Home'
 import { BrowserRouter, Routes, Route } from "react-router";
-import Menu from "./components/Menu";
-import MainMenu from "./components/Common/Menu";
+import Home from "./components/Home";
+import { AuthProvider } from "./context/testProvider";
+import Learn from "./components/Learn";
+import { Fragment } from "react";
 // JSX
 function App() {
   // Component
 
-  const list = [
-    {
-      name: "phong",
-      age: "25",
-      gender: "male",
-    },
-    {
-      name: "phong1",
-      age: "253",
-      gender: "male",
-    },
-    {
-      name: "phong2",
-      age: "235",
-      gender: "male",
-    },
-  ];
-
-  const listFemale = [
-    {
-      name: "female234",
-      age: "25",
-      gender: "female",
-    },
-    {
-      name: "female2234",
-      age: "253",
-      gender: "female",
-    },
-    {
-      name: "female2324",
-      age: "235",
-      gender: "female",
-    },
-  ];
+  //  routing => định nghĩa các đường dẫn cho các component khác nhau
 
   return (
     <div className="App">
       <BrowserRouter>
-        <div className="flex flex-col min-h-screen ">
-          <MainMenu />
-
-        </div>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/learn" element={
+            < >
+              <AuthProvider>
+                <Learn />
+                <Home />
+              </AuthProvider>
+            </>
+          } />
+        </Routes>
       </BrowserRouter>
-      {/* <Products /> */}
     </div>
   );
 }
