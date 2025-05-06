@@ -1,6 +1,7 @@
 import React from "react";
 
 const SideBarMenu = (props) => {
+  //  <SideBarMenu isOpen={isOpen} handleCloseMenu={handleCloseMenu} />
   const { isOpen, handleCloseMenu } = props;
   return (
     <div>
@@ -10,7 +11,9 @@ const SideBarMenu = (props) => {
           transition: "all 0.3s ease",
         }}
         className="bg-blue-300 fixed inset-0 z-[100] w-[260px] "
-      ></div>
+      >
+        
+      </div>
       <div
         style={{
           display: isOpen ? "block" : "none",

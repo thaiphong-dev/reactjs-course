@@ -4,6 +4,10 @@ import Home from "./components/Home";
 import { AuthProvider } from "./context/testProvider";
 import Learn from "./components/Learn";
 import { Fragment } from "react";
+import { Test } from "./components/Test";
+import Todo from "./components/Common/Todo";
+
+
 // JSX
 function App() {
   // Component
@@ -14,15 +18,39 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/learn" element={
-            < >
-              <AuthProvider>
-                <Learn />
-                <Home />
-              </AuthProvider>
-            </>
-          } />
+          <Route
+            path="/"
+            element={
+              <AuthProvider>  <Home /></AuthProvider>
+              
+             
+            }
+          />
+           <Route
+            path="/todo"
+            element={
+              <Todo/>
+            }
+          />
+          <Route
+            path="/learn"
+            element={
+              <>
+                <AuthProvider>
+                  <Learn />
+                  <Home />
+                </AuthProvider>
+              </>
+            }
+          />
+          <Route
+            path="/test"
+            element={
+              <Fragment>
+                  <Test />
+              </Fragment>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </div>

@@ -7,8 +7,9 @@ const MainBanner = (props) => {
     </div>
   );
 };
-
+/*
 MainBanner.propTypes = {
   img: String,
 };
+*/
 export default React.memo(MainBanner);
