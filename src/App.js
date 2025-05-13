@@ -5,7 +5,8 @@ import { AuthProvider } from "./context/testProvider";
 import Learn from "./components/Learn";
 import { Fragment } from "react";
 import { Test } from "./components/Test";
-import Todo from "./components/Common/Todo";
+import { Todo } from "./components/Todo";
+
 
 
 // JSX
@@ -22,8 +23,6 @@ function App() {
             path="/"
             element={
               <AuthProvider>  <Home /></AuthProvider>
-              
-             
             }
           />
            <Route
