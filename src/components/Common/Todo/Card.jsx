@@ -29,8 +29,11 @@ const Card = ({ title, detail,category, priority, isChecked, onTick, onRemove}) 
         <p className="font-semibold text-xl p-1">{title}</p>
         <p  style={{
            color: isChecked ? 'white' : 'black',
-        }} className='text-[#5C5C57E5] text-sm p-1'>{detail}</p>
-        <p className='text-[#5C5C57E5] text-sm p-1'>{category}</p>
+        }} className='text-[#4B332F] text-sm p-1'>{detail}</p>
+        <p style={{
+    
+    color: isChecked ? 'white' : 'black',
+  }} className='text-[#4B332F] text-sm p-1'>{category}</p>
         <p  style={{
     
       color: isChecked ? 'white' : 'black',
@@ -38,7 +41,10 @@ const Card = ({ title, detail,category, priority, isChecked, onTick, onRemove}) 
       </div>
 
      <div className="mt-2 flex flex-col items-center pl-4">
-     <p className='text-[#5C5C57E5] text-sm p-1'>{priority}</p>
+     <p style={{
+    
+    color: isChecked ? 'white' : 'black',
+  }} className='text-[#4B332F] text-sm p-1'>{priority}</p>
       {mockIcon.map((e, index) => (
         <img key={index} className="mb-2 cursor-pointer w-5 h-5" onClick={e.onclick} src={e.link} alt={`icon-${index}`} />
       ))}

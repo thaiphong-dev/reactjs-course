@@ -43,40 +43,50 @@ const TodoMain = () => {
       label: "Urgent",
     },
   ];
-  const mockBy = [{ name: "By category" }, { name: "By priority" }];
+  /* const mockBy = [{ name: "By category" }, { name: "By priority" }]; */
 
   const [inputs, setInputs] = useState({
     title: "",
     detail: "",
-    category: "", 
-    priority: "",
+    category: "0",
+    priority: "0",
+  });
+  const [chooses, setChoose] = useState({
+    chooseCategory: "",
+    choosePriority: "",
   });
   const [cards, setCards] = useState([]);
   const [filteredCards, setFilteredCards] = useState([]);
   const [visibleCards, setVisibleCards] = useState(4);
   const [searchKeyword, setSearchKeyword] = useState("");
-  
 
-  const handleInput = (key, label) => {
-    setInputs((prev) => ({ ...prev, [key]: label }));
+  const handleInput = (key, value) => {
+    setInputs((prev) => ({ ...prev, [key]: value }));
+  };
+  const handleChoose = (key, value) => {
+    setChoose((prev) => ({ ...prev, [key]: value }));
   };
 
   const handleAddCard = () => {
     const { title, detail, category, priority } = inputs;
 
+    // Tìm label tương ứng từ value
+    const categoryLabel =
+      mockCategory.find((cat) => cat.value === inputs.category)?.label || " ";
+    const priorityLabel =
+      mockPriority.find((pr) => pr.value === inputs.priority)?.label || "";
 
-  // Tìm label tương ứng từ value
-  const categoryLabel = mockCategory.find(cat => cat.value === inputs.category)?.label || " ";
-  const priorityLabel = mockPriority.find(pr => pr.value === inputs.priority) ?.label || "";
-
-  // Chỉ thêm card nếu title hoặc detail có nội dung.
- 
-    if (title.trim() !== "" || detail.trim() !== "" ||category.trim()!== ""  || priority.trim() !== "") {
+    if (
+      title.trim() !== "" ||
+      detail.trim() !== "" ||
+      category.trim() !== "" ||
+      priority.trim() !== ""
+    ) {
       setCards((prev) => [
         { title, detail, categoryLabel, priorityLabel, isChecked: false },
         ...prev,
       ]);
-      setInputs({ title: "", detail: "", category: "", priority: "" });
+      setInputs({ title: "", detail: "", category: "0", priority: "0" });
     }
   };
 
@@ -95,15 +105,29 @@ const TodoMain = () => {
   };
 
   const handleSearch = () => {
-    if (searchKeyword.trim() === "") {
+    const categoryLabel =
+      mockCategory.find((cat) => cat.value === chooses.chooseCategory)?.label ||
+      "";
+
+    const priorityLabel =
+      mockPriority.find((pr) => pr.value === chooses.choosePriority)?.label ||
+      "";
+    const keyword = searchKeyword.toLowerCase().trim();
+
+    if (keyword === "" && categoryLabel === "" && priorityLabel === "") {
       setFilteredCards(cards);
     } else {
-      const result = cards.filter((card) =>
-        card.title.toLowerCase().includes(searchKeyword.toLowerCase())
+      const result = cards.filter(
+        (card) =>
+          card.title.toLowerCase().includes(keyword) &&
+          (categoryLabel.toLowerCase() === "" ||
+            card.category.toLowerCase().includes(categoryLabel)) &&
+          (priorityLabel.toLowerCase() === "" ||
+            card.priority.toLowerCase().includes(priorityLabel))
       );
       setFilteredCards(result);
     }
-    setVisibleCards(4); // Reset khi tìm kiếm
+    setVisibleCards(4);
   };
 
   const handleLoadMore = () => {
@@ -118,10 +142,6 @@ const TodoMain = () => {
     setFilteredCards(cards);
     setVisibleCards(4); // Reset khi có card mới
   }, [cards]);
-  
-  
-  
-  
 
   return (
     <div>
@@ -130,7 +150,7 @@ const TodoMain = () => {
         <input
           onChange={(e) => handleInput("title", e.target.value)}
           type="text"
-          value={inputs.title} 
+          value={inputs.title}
           placeholder="Type Title Of Task"
           className="rounded-md bg-[#DBE2EF] h-[17px] border-[#B1B1B166] p-5 mt-5 w-[50%]"
         />
@@ -150,49 +170,64 @@ const TodoMain = () => {
           +
         </div>
       </div>
-      {/*Nút option category priority */}
+      {/*Nút option category priority  add card*/}
       <div className="lg:flex items-center justify-between gap-[20px] mt-[20px]">
-  {/* Category select */}
-  <select
-    className="bg-[#DBE2EF] rounded-md w-[50%] h-[40px] p-2"
-    value={inputs.category}
-    onChange={(e) => handleInput("category", e.target.value)}
-  >
-    {mockCategory.map((e) => (
-      <option key={e.value} value={e.value}>{e.label}</option>
-    ))}
-  </select>
+        {/* Category select */}
+        <select
+          className="bg-[#DBE2EF] rounded-md w-[50%] h-[40px] p-2"
+          value={inputs.category}
+          onChange={(e) => handleInput("category", e.target.value)}
+        >
+          {mockCategory.map((e) => (
+            <option key={e.value} value={e.value}>
+              {e.label}
+            </option>
+          ))}
+        </select>
 
-  {/* Priority select */}
-  <select
-    className="bg-[#DBE2EF] rounded-md w-[50%] h-[40px] p-2"
-    value={inputs.priority}
-    onChange={(e) => handleInput("priority", e.target.value)}
-  >
-    {mockPriority.map((e) => (
-      <option key={e.value} value={e.value}>{e.label}</option>
-    ))}
-  </select>
-</div>
-
+        {/* Priority select */}
+        <select
+          className="bg-[#DBE2EF] rounded-md w-[50%] h-[40px] p-2"
+          value={inputs.priority}
+          onChange={(e) => handleInput("priority", e.target.value)}
+        >
+          {mockPriority.map((e) => (
+            <option key={e.value} value={e.value}>
+              {e.label}
+            </option>
+          ))}
+        </select>
+      </div>
 
       {/* Filter và Search */}
       <div className="flex justify-between gap-[70px]">
-        <div className="flex justify-between w-[45%] mt-[20px]">
-          {mockBy.map((e, i) => (
-            <div key={i} className="bg-[#F0D1A8] rounded-md p-2 w-[46%]">
-              <div className="flex justify-between">
-                {e.name}
-                <img
-                  className="w-[20px]"
-                  src="/assets/images/todo/sort.svg"
-                  alt=""
-                />
-              </div>
-            </div>
-          ))}
+        <div className="flex justify-between w-[48%] mt-[20px]">
+          {/* Filter select  search*/}
+          <select
+            className="bg-[#F0D1A8] rounded-md w-[47%] h-[40px] p-2"
+            value={chooses.chooseCategory}
+            onChange={(e) => handleChoose("chooseCategory", e.target.value)}
+          >
+            {mockCategory.map((e) => (
+              <option key={e.value} value={e.value}>
+                {e.label}
+              </option>
+            ))}
+          </select>
+          <select
+            className="bg-[#F0D1A8] rounded-md w-[47%] h-[40px] p-2"
+            value={chooses.choosePriority}
+            onChange={(e) => handleChoose("choosePriority", e.target.value)}
+          >
+            {mockPriority.map((e) => (
+              <option key={e.value} value={e.value}>
+                {e.label}
+              </option>
+            ))}
+          </select>
         </div>
 
+        {/* <!---Search --> */}
         <div className="mt-[20px] flex justify-self-start rounded-md border border-[#F0D1A8]">
           <input
             className="pl-[5px]"
